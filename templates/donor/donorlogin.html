@@ -1,0 +1,156 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Login</title>
+
+    <!-- Bootstrap & Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Full screen height sathi */
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #c31432, #240b36) !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Login Container la thoda varti shift kela aahe */
+        .login-wrapper {
+            flex: 1; /* Hi property footer la khali dhakalte */
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            padding-top: 100px; /* Navbar pasun thodi jaga */
+            padding-bottom: 40px; /* Footer pasun thodi jaga */
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 550px; /* Box chi width thodi vadhavali */
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 45px; /* Header motha kela */
+            text-align: center;
+            border: none;
+        }
+
+        .card-header h2 {
+            color: #fff;
+            font-weight: 700;
+            margin: 0;
+            font-size: 32px; /* Title motha kela */
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 50px; /* Body madhli space vadhavali mhanje box motha disel */
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .input-style {
+            background: #f8f9fa !important;
+            border: 1px solid #ddd !important;
+            border-radius: 10px !important;
+            padding: 15px !important; /* Input fields mothe kele */
+            height: auto !important;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px; /* Button motha kela */
+            border-radius: 35px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            border: none;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+          color: #fff !important; 
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(195, 20, 50, 0.3);
+           
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        /* Footer sathi styling jar garaj asel tar */
+        footer {
+            margin-top: auto; /* Footer hamesha khali rahil */
+        }
+    </style>
+</head>
+<body>
+
+{% include "blood/navbar.html" %}
+
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="card-header">
+            <h2>Donor Login</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{% url 'donorlogin' %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>Username</label>
+                    {% render_field form.username class="form-control input-style" placeholder="Enter Username" %}
+                </div>
+
+                <div class="form-row mt-4"> <!-- Jaga sodnyasathi mt-4 -->
+                    <div class="col-md-12">
+                        <label>Password</label>
+                        {% render_field form.password class="form-control input-style" placeholder="Enter Password" %}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit">
+                    Login
+                </button>
+            </form>
+
+            <p class="register-text">
+                Does not have an account? <a href="{% url 'donorsignup' %}" style="color: #c31432; font-weight: bold;">Click here to register</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% include "blood/footer.html" %}
+
+</body>
+</html>

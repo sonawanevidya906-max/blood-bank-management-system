@@ -1,0 +1,157 @@
+{% extends 'patient/patientbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        .request-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .request-card {
+            width: 100%;
+            max-width: 650px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        /* Patient Theme Gradient Header */
+        .card-header-custom {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .card-header-custom h2 {
+            font-weight: 700;
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-body-custom {
+            padding: 40px;
+        }
+
+        /* Modern Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 15px;
+        }
+
+        .input-style {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-style:focus {
+            border-color: #c31432;
+            box-shadow: 0 0 8px rgba(195, 20, 50, 0.1);
+            background-color: #fff;
+        }
+
+        /* Request Button */
+        .btn-request {
+            width: 100%;
+            padding: 15px;
+            border-radius: 35px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            border: none;
+            color: white !important;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-request:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(195, 20, 50, 0.3);
+        }
+    </style>
+</head>
+
+<div class="request-wrapper">
+    <div class="request-card">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-tint mr-2"></i> Make Blood Request</h2>
+        </div>
+        
+        <div class="card-body-custom">
+            <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Patient Name -->
+                <div class="form-group">
+                    <label class="form-label">Patient Name</label>
+                    {% render_field request_form.patient_name|attr:'required:true' class="input-style" placeholder="Full Name" %}
+                </div>
+
+                <!-- Patient Age -->
+                <div class="form-group">
+                    <label class="form-label">Patient Age</label>
+                    {% render_field request_form.patient_age|attr:'required:true' class="input-style" placeholder="Age" %}
+                </div>
+
+                <!-- Reason -->
+                <div class="form-group">
+                    <label class="form-label">Reason for Request</label>
+                    {% render_field request_form.reason|attr:'required:true' class="input-style" placeholder="e.g. Surgery, Accident, etc." %}
+                </div>
+
+                <!-- Blood Group Select -->
+                <div class="form-group">
+                    <label class="form-label">Required Blood Group</label>
+                    <select name="bloodgroup" class="input-style" required>
+                        <option disabled="disabled" selected="selected">Choose blood group</option>
+                        <option>O+</option><option>O-</option>
+                        <option>A+</option><option>A-</option>
+                        <option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option>
+                    </select>
+                </div>
+
+                <!-- Unit Input -->
+                <div class="form-group">
+                    <label class="form-label">Unit (in ml)</label>
+                    {% render_field request_form.unit|attr:'required:true' class="input-style" placeholder="Quantity needed" %}
+                </div>
+
+                <button class="btn-request" type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

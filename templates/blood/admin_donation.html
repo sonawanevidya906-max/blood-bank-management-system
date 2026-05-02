@@ -1,0 +1,133 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    <style>
+        
+        .table-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-top: 30px;
+        }
+
+        
+        .table thead {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+        }
+
+        .table thead th {
+            border: none;
+            padding: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+       
+        .status-pill {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .bg-pending { background-color: #fff3cd; color: #856404; }
+        .bg-approved { background-color: #d4edda; color: #155724; }
+        .bg-rejected { background-color: #f8d7da; color: #721c24; }
+
+        .action-btn {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 5px;
+            text-decoration: none !important;
+            transition: 0.3s;
+        }
+        
+        .btn-approve { background-color: #2ecc71; color: white; margin-right: 5px; }
+        .btn-approve:hover { background-color: #27ae60; color: white; }
+        
+        .btn-reject { background-color: #e74c3c; color: white; }
+        .btn-reject:hover { background-color: #c0392b; color: white; }
+
+        .blood-group-badge {
+            background-color: #c31432;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<div class="container-fluid px-4">
+    <div class="table-card">
+        <h4 class="text-center mb-4" style="font-weight: 700; color: #240b36;">
+            <i class="fas fa-hand-holding-heart mr-2"></i>BLOOD DONATION REQUESTS
+        </h4>
+        
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Donor Name</th>
+                        <th>Disease</th>
+                        <th>Age</th>
+                        <th>Blood Group</th>
+                        <th>Unit</th>
+                        <th>Request Date</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action / Stock Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in donations %}
+                    <tr>
+                        <td><strong>{{t.donor}}</strong></td>
+                        <td>{{t.disease}}</td>
+                        <td>{{t.age}}</td>
+                        <td><span class="blood-group-badge">{{t.bloodgroup}}</span></td>
+                        <td>{{t.unit}} Unit</td>
+                        <td>{{t.date}}</td>
+                        
+                        <td class="text-center">
+                            {% if t.status == 'Pending' %}
+                                <span class="status-pill bg-pending">Pending</span>
+                            {% elif t.status == 'Approved' %}
+                                <span class="status-pill bg-approved">Approved</span>
+                            {% else %}
+                                <span class="status-pill bg-rejected">Rejected</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">
+                            {% if t.status == 'Pending' %}
+                                <a href="{% url 'approve-donation' t.id %}" class="action-btn btn-approve">APPROVE</a>
+                                <a href="{% url 'reject-donation' t.id %}" class="action-btn btn-reject">REJECT</a>
+                            {% elif t.status == 'Approved' %}
+                                <span class="text-success small font-weight-bold">
+                                    <i class="fas fa-plus-circle"></i> {{t.unit}} Unit Added
+                                </span>
+                            {% else %}
+                                <span class="text-danger small font-weight-bold">
+                                    <i class="fas fa-times-circle"></i> 0 Unit Added
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No donation requests found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

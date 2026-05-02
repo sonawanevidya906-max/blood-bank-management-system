@@ -1,0 +1,150 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        .login-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        
+        .login-card {
+            width: 500px; 
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        .login-header {
+            background: linear-gradient(90deg, #c31432, #240b36); 
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .login-header h2 {
+            margin: 0;
+            font-size: 26px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .login-body {
+            padding: 40px 50px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+       
+        .custom-input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid #c9e1f5;
+            border-radius: 10px;
+            outline: none;
+            background-color: #eef5fd;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .custom-input:focus {
+            border-color: #a0c4ff;
+            background-color: #e2efff;
+        }
+
+      
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .admin-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+{% include "blood/navbar.html" %}
+
+<div class="login-section">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-user-shield admin-icon"></i>
+            <h2>Admin Login</h2>
+        </div>
+        <div class="login-body">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label class="form-label">Admin Username</label>
+                    {% render_field form.username class="custom-input" placeholder="Enter Username" %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    {% render_field form.password class="custom-input" placeholder="Enter Password" %}
+                </div>
+
+                <button type="submit" class="btn-login">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "blood/footer.html" %}
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

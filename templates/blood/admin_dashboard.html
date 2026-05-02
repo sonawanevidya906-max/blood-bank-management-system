@@ -1,0 +1,235 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+<head>
+    <style>
+        .admin-card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        
+        .blood-box {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .blood-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #c31432; /* Blood Red */
+            margin-bottom: 0;
+        }
+
+        .blood-unit {
+            font-size: 28px;
+            font-weight: 800;
+            color: #2c3e50;
+        }
+
+        .unit-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        
+        .stats-section {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .stats-icon {
+            font-size: 40px;
+            padding: 15px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+      
+        .icon-donors { color: #3498db; background: rgba(52, 152, 219, 0.1); }
+        .icon-req { color: #f39c12; background: rgba(243, 156, 18, 0.1); }
+        .icon-approved { color: #2ecc71; background: rgba(46, 204, 113, 0.1); }
+        .icon-total { color: #e74c3c; background: rgba(231, 76, 60, 0.1); }
+
+        .stats-number {
+            font-size: 30px;
+            font-weight: 800;
+            display: block;
+        }
+
+        .stats-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        hr { border-top: 2px solid #e9ecef; margin: 30px 0; }
+        
+        .section-title {
+            font-weight: 700;
+            color: #240b36;
+            margin-bottom: 25px;
+            border-left: 5px solid #c31432;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+
+<div class="container-fluid mt-4 px-4">
+    
+    <h3 class="section-title">Blood Stock Availability</h3>
+    
+    <!-- Blood Stock Rows -->
+    <div class="row text-center">
+        <!-- A+ -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">A+ <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{A1.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- B+ -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">B+ <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{B1.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- O+ -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">O+ <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{O1.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- AB+ -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">AB+ <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{AB1.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <!-- A- -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">A- <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{A2.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- B- -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">B- <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{B2.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- O- -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">O- <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{O2.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+        <!-- AB- -->
+        <div class="col-md-3">
+            <div class="card admin-card">
+                <div class="blood-box">
+                    <p class="blood-name">AB- <i class="fas fa-tint"></i></p>
+                    <span class="blood-unit">{{AB2.unit}}</span>
+                    <p class="unit-text">Units Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    
+    <h3 class="section-title">General Statistics</h3>
+
+    <!-- Overall Statistics Row -->
+    <div class="row text-center">
+        <!-- Total Donors -->
+        <div class="col-md-3">
+            <div class="card admin-card stats-section">
+                <i class="fas fa-users stats-icon icon-donors"></i>
+                <div>
+                    <span class="stats-number">{{totaldonors}}</span>
+                    <span class="stats-label">Total Donors</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Requests -->
+        <div class="col-md-3">
+            <div class="card admin-card stats-section">
+                <i class="fas fa-spinner stats-icon icon-req"></i>
+                <div>
+                    <span class="stats-number">{{totalrequest}}</span>
+                    <span class="stats-label">Total Requests</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Requests -->
+        <div class="col-md-3">
+            <div class="card admin-card stats-section">
+                <i class="fas fa-check-circle stats-icon icon-approved"></i>
+                <div>
+                    <span class="stats-number">{{totalapprovedrequest}}</span>
+                    <span class="stats-label">Approved Requests</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Blood Units -->
+        <div class="col-md-3">
+            <div class="card admin-card stats-section">
+                <i class="fas fa-tint stats-icon icon-total"></i>
+                <div>
+                    <span class="stats-number">{{totalbloodunit}}</span>
+                    <span class="stats-label">Total Units (ml)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

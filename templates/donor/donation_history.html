@@ -1,0 +1,158 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        .history-wrapper {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .history-card {
+            width: 100%;
+            max-width: 1100px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        /* Red-Purple Gradient Header */
+        .card-header-custom {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-header-custom h2 {
+            color: #fff;
+            font-weight: 700;
+            margin: 0;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-body-custom {
+            padding: 30px;
+        }
+
+        /* Modern Table Styling */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            width: 100%;
+        }
+
+        .table thead th {
+            background-color: #f8f9fa;
+            border: none;
+            color: #c31432;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .table tbody tr:hover {
+            transform: scale(1.01);
+            background-color: #fff9f9;
+        }
+
+        .table td {
+            padding: 15px;
+            vertical-align: middle;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #555;
+        }
+
+        /* Status Badge Styling matching your conditions */
+        .badge-status {
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .status-approved { background-color: #d4edda; color: #155724; }
+        .status-rejected { background-color: #f8d7da; color: #721c24; }
+        .status-pending { background-color: #fff3cd; color: #856404; }
+
+        .blood-group-text {
+            color: #c31432;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<div class="history-wrapper">
+    <div class="history-card">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-hand-holding-heart mr-2"></i> My Donation History</h2>
+        </div>
+        
+        <div class="card-body-custom">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Age</th>
+                            <th>Disease (If any)</th>
+                            <th>Blood Group</th>
+                            <th>Unit (ml)</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in donations %}
+                        <tr>
+                            <td>{{t.age}}</td>
+                            <td>{{t.disease}}</td>
+                            <td><span class="blood-group-text">{{t.bloodgroup}}</span></td>
+                            <td>{{t.unit}} ml</td>
+                            <td>{{t.date}}</td>
+                            <td>
+                                {% if t.status == 'Approved' %}
+                                    <span class="badge-status status-approved">Approved</span>
+                                {% elif t.status == 'Rejected' %}
+                                    <span class="badge-status status-rejected">Rejected</span>
+                                {% else %}
+                                    <span class="badge-status status-pending">Pending</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">No donation history available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

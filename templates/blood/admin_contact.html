@@ -1,0 +1,107 @@
+{% extends 'blood/adminbase.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+<h3>Contact Messages</h3>
+
+<!-- Search form -->
+<form method="GET" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Search by name">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </div>
+  </div>
+</form>
+
+<a href="/export-contacts" class="btn btn-success mb-3">
+  Download CSV
+</a>
+
+<!-- Contact Table -->
+<table class="table table-bordered table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Message</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in contacts %}
+    <tr>
+      <td>{{c.name}}</td>
+      <td>{{c.email}}</td>
+      <td>{{c.phone}}</td>
+      <td>{{c.message|truncatechars:30}}</td>
+      <td>{{c.date_submitted}}</td>
+      <td>
+        <!-- Delete button -->
+        <a href="/delete-contact/{{c.id}}" class="btn btn-danger btn-sm">
+          <i class="fas fa-trash"></i>
+        </a>
+        <!-- View button -->
+        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#msg{{c.id}}">
+          View
+        </button>
+      </td>
+    </tr>
+
+    <!-- Modal for this contact -->
+    <div class="modal fade" id="msg{{c.id}}" tabindex="-1" role="dialog" aria-labelledby="msgLabel{{c.id}}" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="msgLabel{{c.id}}">Message from {{c.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Email:</strong> {{c.email}}</p>
+            <p><strong>Phone:</strong> {{c.phone}}</p>
+            <p><strong>Message:</strong><br>{{c.message}}</p>
+            <p><strong>Date Submitted:</strong> {{c.date_submitted}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% empty %}
+    <tr>
+      <td colspan="6" class="text-center">No Messages Yet</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Pagination -->
+<div class="pagination">
+  {% if contacts.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{contacts.previous_page_number}}">Previous</a>
+  {% endif %}
+  <span>Page {{contacts.number}} of {{contacts.paginator.num_pages}}</span>
+  {% if contacts.has_next %}
+    <a href="?page={{contacts.next_page_number}}">Next</a>
+    <a href="?page={{contacts.paginator.num_pages}}">Last</a>
+  {% endif %}
+</div>
+
+</div>
+
+<!-- Bootstrap JS  -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+{% endblock %}

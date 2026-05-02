@@ -1,0 +1,120 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+
+<style>
+    /* Dashboard Stats Card Styling */
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        background: #fff;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .card-body {
+        padding: 25px;
+        text-align: center;
+    }
+
+    /* Icon Backgrounds */
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        font-size: 24px;
+    }
+
+    /* Colors matching the status */
+    .bg-blue { background: rgba(0, 123, 255, 0.1); color: #007bff; }
+    .bg-orange { background: rgba(255, 152, 0, 0.1); color: #ff9800; }
+    .bg-green { background: rgba(40, 167, 69, 0.1); color: #28a745; }
+    .bg-red { background: rgba(220, 53, 69, 0.1); color: #dc3545; }
+
+    .stat-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #777;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+        margin-top: 5px;
+    }
+
+    .welcome-section {
+        margin-bottom: 30px;
+    }
+</style>
+
+<div class="container-fluid">
+    
+
+    <div class="row">
+        <!-- Request Made -->
+        <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="icon-box bg-blue">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="stat-title">Request Made</div>
+                    <div class="stat-value">{{requestmade}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Request -->
+        <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="icon-box bg-orange">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="stat-title">Pending Request</div>
+                    <div class="stat-value">{{requestpending}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Request -->
+        <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="icon-box bg-green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-title">Approved Request</div>
+                    <div class="stat-value">{{requestapproved}}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rejected Request -->
+        <div class="col-md-3 col-sm-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="icon-box bg-red">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-title">Rejected Request</div>
+                    <div class="stat-value">{{requestrejected}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

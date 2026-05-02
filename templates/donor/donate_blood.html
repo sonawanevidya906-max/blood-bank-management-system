@@ -1,0 +1,135 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Container sizing */
+        .donate-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 20px 10px;
+        }
+
+        .donate-card {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        /* Red-Purple Gradient Header */
+        .card-header-custom {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .card-header-custom h2 {
+            font-weight: 700;
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-body-custom {
+            padding: 35px;
+        }
+
+        /* Modern Form Styling */
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+        }
+
+        .input-style {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+            outline: none;
+            margin-bottom: 20px;
+        }
+
+        .input-style:focus {
+            border-color: #c31432;
+            box-shadow: 0 0 8px rgba(195, 20, 50, 0.1);
+            background-color: #fff;
+        }
+
+        /* Donate Button */
+        .btn-donate {
+            width: 100%;
+            padding: 15px;
+            border-radius: 35px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            border: none;
+            color: white !important;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-donate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(195, 20, 50, 0.3);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<div class="donate-wrapper">
+    <div class="donate-card">
+        <div class="card-header-custom">
+            <h2><i class="fas fa-hand-holding-heart mr-2"></i> Donate Blood</h2>
+        </div>
+        
+        <div class="card-body-custom">
+            <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Blood Group Selection -->
+                <label class="form-label">Blood Group</label>
+                <select name="bloodgroup" class="input-style" required>
+                    <option disabled="disabled" selected="selected">Choose blood group</option>
+                    <option>O+</option><option>O-</option>
+                    <option>A+</option><option>A-</option>
+                    <option>B+</option><option>B-</option>
+                    <option>AB+</option><option>AB-</option>
+                </select>
+
+                <!-- Unit Input -->
+                <label class="form-label">Unit (in ml)</label>
+                {% render_field donation_form.unit|attr:'required:true' class="input-style" placeholder="e.g. 350" %}
+
+                <!-- Disease Input -->
+                <label class="form-label">Disease (if any)</label>
+                {% render_field donation_form.disease|attr:'required:true' class="input-style" placeholder="Mention None if healthy" %}
+
+                <!-- Age Input -->
+                <label class="form-label">Donor Age</label>
+                {% render_field donation_form.age|attr:'required:true' class="input-style" placeholder="Enter your age" %}
+
+                <button class="btn-donate" type="submit">DONATE NOW</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

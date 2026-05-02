@@ -1,0 +1,104 @@
+{% extends 'donor/donorbase.html' %} {% block content %}
+<head>
+  <style>
+    .history-wrapper {
+      padding: 100px 40px;
+    }
+    .history-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .card-header-custom {
+      background: linear-gradient(90deg, #c31432, #240b36);
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    .card-header-custom h3 {
+    color: #fff;
+    font-weight: 700;
+    margin: 0;
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+    .table {
+      width: 100%;
+      margin: 0;
+    }
+    .table thead th {
+      background: #f8f9fa;
+      color: #c31432;
+      border: none;
+      padding: 15px;
+    }
+    .table td {
+      padding: 15px;
+      vertical-align: middle;
+      border-top: 1px solid #eee;
+    }
+    .status-badge {
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .bg-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .bg-approved {
+      background: #d4edda;
+      color: #155724;
+    }
+    .bg-rejected {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+
+<div class="history-wrapper">
+  <div class="history-card">
+    <div class="card-header-custom">
+      <h3>Request History</h3>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Age</th>
+            <th>Blood Group</th>
+            <th>Unit</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in requests %}
+          <tr>
+            <td>{{t.patient_name}}</td>
+            <td>{{t.patient_age}}</td>
+            <td><b style="color: #c31432">{{t.bloodgroup}}</b></td>
+            <td>{{t.unit}}ml</td>
+            <td>{{t.date}}</td>
+            <td>
+              {% if t.status == 'Approved' %}
+              <span class="status-badge bg-approved">Approved</span>
+              {% elif t.status == 'Rejected' %}
+              <span class="status-badge bg-rejected">Rejected</span>
+              {% else %}
+              <span class="status-badge bg-pending">Pending</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

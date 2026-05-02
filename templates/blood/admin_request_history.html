@@ -1,0 +1,129 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    <style>
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-top: 30px;
+        }
+
+      
+        .table thead {
+             background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+        }
+
+        .table thead th {
+            border: none;
+            padding: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+       
+        .status-pill {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        
+        .bg-approved { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .bg-rejected { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .stock-info {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .blood-badge {
+            background-color: #c31432;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<div class="container-fluid px-4">
+    <div class="table-container">
+        <h4 class="text-center mb-4" style="font-weight: 700; color: #182848;">
+            <i class="fas fa-history mr-2"></i>BLOOD REQUEST HISTORY
+        </h4>
+
+        {% if message %}
+            <div class="alert alert-danger text-center" role="alert">
+                <i class="fas fa-exclamation-circle mr-2"></i>{{message}}
+            </div>
+        {% endif %}
+        
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Age</th>
+                        <th>Reason</th>
+                        <th class="text-center">Blood Group</th>
+                        <th>Unit (ml)</th>
+                        <th>Date</th>
+                        <th class="text-center">Status</th>
+                        <th>Stock Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in requests %}
+                    <tr>
+                        <td><strong>{{t.patient_name}}</strong></td>
+                        <td>{{t.patient_age}}</td>
+                        <td><small class="text-muted">{{t.reason}}</small></td>
+                        <td class="text-center"><span class="blood-badge">{{t.bloodgroup}}</span></td>
+                        <td>{{t.unit}} ml</td>
+                        <td>{{t.date}}</td>
+                        
+                        <td class="text-center">
+                            {% if t.status == 'Approved' %}
+                                <span class="status-pill bg-approved">
+                                    <i class="fas fa-check-circle mr-1"></i>Approved
+                                </span>
+                            {% else %}
+                                <span class="status-pill bg-rejected">
+                                    <i class="fas fa-times-circle mr-1"></i>Rejected
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if t.status == 'Approved' %}
+                                <span class="stock-info text-warning">
+                                    <i class="fas fa-minus-square mr-1"></i>{{t.unit}} Unit Deducted
+                                </span>
+                            {% else %}
+                                <span class="stock-info text-muted">
+                                    <i class="fas fa-info-circle mr-1"></i>No Change in Stock
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted">No request history found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

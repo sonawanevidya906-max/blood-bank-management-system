@@ -1,0 +1,158 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static %}
+
+<head>
+    <style>
+        .update-form-container {
+            padding: 40px 0;
+            background: #f4f7f6;
+        }
+        
+        .card-update {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .card-update .card-header {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border: none;
+        }
+
+        .card-update .card-body {
+            padding: 40px;
+            background: white;
+        }
+
+        /* Form Styling */
+        .form-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+            background-color: #f9f9f9;
+        }
+
+        .form-control-custom:focus {
+            border-color: #c31432;
+            outline: none;
+            box-shadow: 0 0 8px rgba(195, 20, 50, 0.2);
+            background-color: #fff;
+        }
+
+        .btn-update-submit {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-update-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(195, 20, 50, 0.4);
+        }
+
+        .select-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+    </style>
+</head>
+
+<div class="update-form-container">
+    <div class="container">
+        <div class="card card-update">
+            <div class="card-header">
+                <h3><i class="fas fa-user-edit mr-2"></i> Update Donor Details</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>First Name</label>
+                            {% render_field userForm.first_name|attr:'required:true' class="form-control-custom" %}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Last Name</label>
+                            {% render_field userForm.last_name|attr:'required:true' class="form-control-custom" %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Username</label>
+                            {% render_field userForm.username|attr:'required:true' class="form-control-custom" %}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Password</label>
+                            {% render_field userForm.password|attr:'required:true' class="form-control-custom" type="password" %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <select name="bloodgroup" class="form-control-custom select-custom">
+                            <option value="{{donor.bloodgroup}}" selected>{{donor.bloodgroup}} (Current)</option>
+                            <option>O+</option><option>O-</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        {% render_field donorForm.address|attr:'required:true' class="form-control-custom" %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Mobile</label>
+                            {% render_field donorForm.mobile|attr:'required:true' class="form-control-custom" %}
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Profile Pic</label>
+                            {% render_field donorForm.profile_pic class="form-control-custom" %}
+                        </div>
+                    </div>
+
+                    <button class="btn-update-submit" type="submit">
+                        <i class="fas fa-sync-alt mr-2"></i> Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

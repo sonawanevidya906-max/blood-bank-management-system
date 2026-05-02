@@ -1,0 +1,224 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+
+        .signup-section {
+            padding: 50px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        .signup-header {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .signup-header h2 {
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 26px;
+        }
+
+        .signup-body {
+            padding: 40px;
+        }
+
+        /* Form Grid Styling */
+        .form-row-custom {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+
+        .form-col {
+            position: relative;
+            width: 100%;
+            padding: 0 15px;
+            flex: 0 0 50%;
+            max-width: 50%;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-col {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+        }
+
+        .input-style {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .input-style:focus {
+            border-color: #c31432;
+            box-shadow: 0 0 8px rgba(195, 20, 50, 0.1);
+            background-color: #fff;
+        }
+
+        .btn-signup {
+            width: 100%;
+            padding: 15px;
+            border-radius: 35px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            border: none;
+            color: white !important;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(195, 20, 50, 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 15px;
+        }
+
+        .login-link a {
+            color: #c31432;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+{% include "blood/navbar.html" %}
+
+<div class="signup-section">
+    <div class="signup-card">
+        <div class="signup-header">
+            <h2><i class="fas fa-user-plus mr-2"></i> Patient Signup</h2>
+        </div>
+        
+        <div class="signup-body">
+            <form method="POST" autocomplete="off" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-row-custom">
+                    <!-- User Form Fields -->
+                    <div class="form-col">
+                        <label class="form-label">First Name</label>
+                        {% render_field userForm.first_name class="input-style" placeholder="Enter First Name" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Last Name</label>
+                        {% render_field userForm.last_name class="input-style" placeholder="Enter Last Name" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Username</label>
+                        {% render_field userForm.username class="input-style" placeholder="Choose Username" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Password</label>
+                        {% render_field userForm.password class="input-style" placeholder="Create Password" %}
+                    </div>
+
+                    <!-- Patient Form Fields -->
+                    <div class="form-col">
+                        <label class="form-label">Age</label>
+                        {% render_field patientForm.age class="input-style" placeholder="Your Age" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Blood Group</label>
+                        <select name="bloodgroup" class="input-style" required>
+                            <option disabled="disabled" selected="selected">Choose blood group</option>
+                            <option>O+</option><option>O-</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option>
+                        </select>
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Disease (if any)</label>
+                        {% render_field patientForm.disease class="input-style" placeholder="Disease name" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Doctor Name</label>
+                        {% render_field patientForm.doctorname class="input-style" placeholder="Attending Doctor" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Mobile Number</label>
+                        {% render_field patientForm.mobile class="input-style" placeholder="Contact Number" %}
+                    </div>
+                    <div class="form-col">
+                        <label class="form-label">Address</label>
+                        {% render_field patientForm.address class="input-style" placeholder="Current Address" %}
+                    </div>
+                    <div class="form-col" style="flex: 0 0 100%; max-width: 100%;">
+                        <label class="form-label">Profile Picture</label>
+                        {% render_field patientForm.profile_pic class="input-style" %}
+                    </div>
+                </div>
+
+                <button class="btn-signup" type="submit">Create Account</button>
+            </form>
+
+            <div class="login-link">
+                Already have an account? <a href="{% url 'patientlogin' %}">Click here to login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "blood/footer.html" %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

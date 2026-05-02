@@ -1,0 +1,153 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+
+        .login-section {
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+
+        }
+
+        
+        .login-card {
+            width: 550px; 
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: none;
+        }
+
+        .login-header {
+            background: linear-gradient(90deg, #c31432, #240b36);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .login-header h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .login-body {
+            padding: 40px 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #c9e1f5;
+            border-radius: 12px;
+            outline: none;
+            background-color: #eef5fd; 
+            font-size: 16px;
+            color: #333;
+            transition: 0.3s;
+        }
+
+        .custom-input:focus {
+            border-color: #a0c4ff;
+            background-color: #e2efff;
+        }
+
+       
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #c31432, #240b36);
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            opacity: 0.9;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .register-link a {
+            color: #c31432;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+{% include "blood/navbar.html" %}
+
+<div class="login-section">
+    <div class="login-card">
+        <div class="login-header">
+            <h2>PATIENT LOGIN</h2>
+        </div>
+        <div class="login-body">
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    {% render_field form.username class="custom-input" placeholder="Enter Username" %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    {% render_field form.password class="custom-input" placeholder="Enter Password" %}
+                </div>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <div class="register-link">
+                Does not have an account? <a href="{% url 'patientsignup' %}">Click here to register</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "blood/footer.html" %}
+</body>
+</html>
