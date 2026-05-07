@@ -151,3 +151,6 @@ EMAIL_RECEIVING_USER = ['admin.bloodbank@gmail.com'] # email on which you will r
 from django.core.mail import send_mail
 from django.conf import settings
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
