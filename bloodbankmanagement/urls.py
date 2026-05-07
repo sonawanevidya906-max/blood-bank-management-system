@@ -18,6 +18,7 @@ from django.urls import path,include
 from django.urls import path
 from django.contrib.auth.views import LogoutView,LoginView
 from blood import views
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -50,6 +51,7 @@ urlpatterns = [
     path('admin-contacts/', views.admin_contact_view, name='admin-contacts'),
     path('delete-contact/<int:pk>/', views.delete_contact_view, name='delete-contact'),
     path('export-contacts', views.export_contacts),
+    
   
 ]
 
